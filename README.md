@@ -167,7 +167,7 @@ http://aws-3tier-backend.ap-south-1.elasticbeanstalk.com/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/piyushw09/aws-3tier-interview-assignment.git
+git clone https://github.com/piyushw09/AWS-3Tier-Task.git
 ```
 
 ### Backend Setup
@@ -203,7 +203,7 @@ npm run dev
 Application screenshots can be found inside:
 
 ```text
-docs/screenshots/
+docs/networking/
 ```
 
 ---

@@ -157,7 +157,7 @@ http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/
 Replace with your Elastic Beanstalk URL:
 
 ```text
-http://yaws-3tier-backend.ap-south-1.elasticbeanstalk.com/
+http://aws-3tier-backend.ap-south-1.elasticbeanstalk.com/
 ```
 
 ---

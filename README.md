@@ -157,7 +157,7 @@ http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/
 Replace with your Elastic Beanstalk URL:
 
 ```text
-http://yaws-3tier-backend.ap-south-1.elasticbeanstalk.com/
+http://aws-3tier-backend.ap-south-1.elasticbeanstalk.com/health
 ```
 
 ---
@@ -167,7 +167,7 @@ http://yaws-3tier-backend.ap-south-1.elasticbeanstalk.com/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/piyushw09/aws-3tier-interview-assignment.git
+git clone https://github.com/piyushw09/AWS-3Tier-Task.git
 ```
 
 ### Backend Setup
@@ -180,7 +180,7 @@ npm install
 npm run dev
 ```
 
-Create:
+Create: This MONGO_URI is inside /docs/.env file.
 
 ```env
 MONGO_URI=<your_mongodb_connection_string>
@@ -203,7 +203,7 @@ npm run dev
 Application screenshots can be found inside:
 
 ```text
-docs/screenshots/
+docs/networking/
 ```
 
 ---

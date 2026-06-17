@@ -1,77 +1,103 @@
 import { useState } from "react";
+import { Card, Form, Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function Register() {
 
-    const [form, setForm] = useState({
-        username: "",
-        email: "",
-        password: ""
-    });
+  const navigate = useNavigate();
 
-    const submitForm = async () => {
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
 
-        try {
+  const registerUser = async () => {
 
-            await API.post("/users", form);
+    try {
 
-            alert("User Created");
+      await API.post("/users", form);
 
-        } catch (error) {
+      alert("Registration Successful");
 
-            alert("Error Creating User");
+      navigate("/");
 
-        }
-    };
+    } catch (error) {
 
-    return (
-        <div>
+      alert("Registration Failed");
 
-            <h2>Register User</h2>
+    }
+  };
 
-            <input
-                placeholder="Username"
-                onChange={(e) =>
-                    setForm({
-                        ...form,
-                        username: e.target.value
-                    })
-                }
+  return (
+    <Container
+      className="d-flex justify-content-center align-items-center page-container"
+    >
+      <Card
+        className="auth-card p-4"
+        style={{ width: "450px" }}
+      >
+
+        <h2 className="text-center mb-4">
+          Register
+        </h2>
+
+        <Form>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Username</Form.Label>
+
+            <Form.Control
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  username: e.target.value
+                })
+              }
             />
+          </Form.Group>
 
-            <br /><br />
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
 
-            <input
-                placeholder="Email"
-                onChange={(e) =>
-                    setForm({
-                        ...form,
-                        email: e.target.value
-                    })
-                }
+            <Form.Control
+              type="email"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  email: e.target.value
+                })
+              }
             />
+          </Form.Group>
 
-            <br /><br />
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
 
-            <input
-                type="password"
-                placeholder="Password"
-                onChange={(e) =>
-                    setForm({
-                        ...form,
-                        password: e.target.value
-                    })
-                }
+            <Form.Control
+              type="password"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  password: e.target.value
+                })
+              }
             />
+          </Form.Group>
 
-            <br /><br />
+          <Button
+            className="w-100"
+            onClick={registerUser}
+          >
+            Register
+          </Button>
 
-            <button onClick={submitForm}>
-                Register
-            </button>
+        </Form>
 
-        </div>
-    );
+      </Card>
+    </Container>
+  );
 }
 
 export default Register;

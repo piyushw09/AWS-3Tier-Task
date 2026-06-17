@@ -1,54 +1,96 @@
 import { useState } from "react";
+import { Card, Form, Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function Login() {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const loginUser = async () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-        try {
+  const loginUser = async () => {
 
-            const response = await API.post("/users/login", {
-                email,
-                password
-            });
+    try {
 
-            alert(response.data.message);
+      const response = await API.post("/users/login", {
+        email,
+        password
+      });
 
-        } catch (error) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data.user)
+      );
 
-            alert("Login Failed");
+      navigate("/dashboard");
 
-        }
-    };
+    } catch (error) {
 
-    return (
-        <div>
-            <h2>Login</h2>
+      alert("Invalid Credentials");
 
-            <input
-                type="email"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
+    }
+  };
+
+  return (
+    <Container
+      className="d-flex justify-content-center align-items-center page-container"
+    >
+      <Card
+        className="auth-card p-4"
+        style={{ width: "400px" }}
+      >
+
+        <h2 className="text-center mb-4">
+          Login
+        </h2>
+
+        <Form>
+
+          <Form.Group className="mb-3">
+
+            <Form.Label>Email</Form.Label>
+
+            <Form.Control
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
 
-            <br /><br />
+          </Form.Group>
 
-            <input
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+          <Form.Group className="mb-3">
+
+            <Form.Label>Password</Form.Label>
+
+            <Form.Control
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
 
-            <br /><br />
+          </Form.Group>
 
-            <button onClick={loginUser}>
-                Login
-            </button>
-        </div>
-    );
+          <Button
+            variant="primary"
+            className="w-100"
+            onClick={loginUser}
+          >
+            Login
+          </Button>
+
+          <Button
+            variant="link"
+            className="w-100 mt-2"
+            onClick={() => navigate("/register")}
+          >
+            Create Account
+          </Button>
+
+        </Form>
+
+      </Card>
+    </Container>
+  );
 }
 
 export default Login;

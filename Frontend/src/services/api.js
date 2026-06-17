@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "http://localhost:5000"
+    baseURL: "http://aws-3tier-backend.ap-south-1.elasticbeanstalk.com/"
 });
 
 export default API;

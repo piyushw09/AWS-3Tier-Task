@@ -1,56 +1,133 @@
 import { useEffect, useState } from "react";
+import { Container, Row, Col, Card, Table } from "react-bootstrap";
+import NavigationBar from "../components/Navbar";
 import API from "../services/api";
 
 function Dashboard() {
 
-    const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-        fetchUsers();
+  const fetchUsers = async () => {
 
-    }, []);
+    const response = await API.get("/users");
 
-    const fetchUsers = async () => {
+    setUsers(response.data);
 
-        const response = await API.get("/users");
+  };
 
-        setUsers(response.data);
-    };
+  return (
+    <>
+      <NavigationBar />
 
-    return (
-        <div>
+      <Container className="mt-4">
 
-            <h2>Dashboard</h2>
+        <Row>
 
-            <table border="1">
+          <Col md={4}>
+            <Card
+              bg="primary"
+              text="white"
+              className="dashboard-card"
+            >
+              <Card.Body>
 
-                <thead>
+                <Card.Title>
+                  Total Users
+                </Card.Title>
 
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                    </tr>
+                <h1>
+                  {users.length}
+                </h1>
 
-                </thead>
+              </Card.Body>
+            </Card>
+          </Col>
 
-                <tbody>
+          <Col md={4}>
+            <Card
+              bg="success"
+              text="white"
+              className="dashboard-card"
+            >
+              <Card.Body>
 
-                    {users.map((user) => (
+                <Card.Title>
+                  Database
+                </Card.Title>
 
-                        <tr key={user._id}>
-                            <td>{user.username}</td>
-                            <td>{user.email}</td>
-                        </tr>
+                <h4>
+                  MongoDB Atlas
+                </h4>
 
-                    ))}
+              </Card.Body>
+            </Card>
+          </Col>
 
-                </tbody>
+          <Col md={4}>
+            <Card
+              bg="dark"
+              text="white"
+              className="dashboard-card"
+            >
+              <Card.Body>
 
-            </table>
+                <Card.Title>
+                  Backend
+                </Card.Title>
+
+                <h4>
+                  Node.js API
+                </h4>
+
+              </Card.Body>
+            </Card>
+          </Col>
+
+        </Row>
+
+        <div className="table-container mt-4">
+
+          <h3>User List</h3>
+
+          <Table
+            striped
+            bordered
+            hover
+          >
+
+            <thead>
+
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {users.map((user) => (
+
+                <tr key={user._id}>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </Table>
 
         </div>
-    );
+
+      </Container>
+    </>
+  );
 }
 
 export default Dashboard;

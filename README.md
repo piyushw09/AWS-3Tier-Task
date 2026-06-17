@@ -180,7 +180,7 @@ npm install
 npm run dev
 ```
 
-Create:
+Create: This MONGO_URI is inside /docs/.env file.
 
 ```env
 MONGO_URI=<your_mongodb_connection_string>

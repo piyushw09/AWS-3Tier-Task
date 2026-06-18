@@ -1,0 +1,63 @@
+name: Backend Deploy to Elastic Beanstalk
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+    paths:
+      - 'Backend/**'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Backend
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create Deployment Package
+        run: |
+          zip -r deploy.zip . \
+          -x "*.git*" \
+          -x "node_modules/*"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Package to S3
+        run: |
+          aws s3 cp deploy.zip s3://${{ secrets.EB_S3_BUCKET }}/deploy-${{ github.sha }}.zip
+
+      - name: Create Application Version
+        run: |
+          aws elasticbeanstalk create-application-version \
+          --application-name "${{ secrets.EB_APPLICATION_NAME }}" \
+          --version-label "${{ github.sha }}" \
+          --source-bundle S3Bucket="${{ secrets.EB_S3_BUCKET }}",S3Key="deploy-${{ github.sha }}.zip"
+
+      - name: Deploy Application
+        run: |
+          aws elasticbeanstalk update-environment \
+          --environment-name "${{ secrets.EB_ENVIRONMENT_NAME }}" \
+          --version-label "${{ github.sha }}"

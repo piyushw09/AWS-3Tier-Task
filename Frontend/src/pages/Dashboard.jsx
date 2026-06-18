@@ -1,15 +1,30 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Table } from "react-bootstrap";
 import NavigationBar from "../components/Navbar";
 import API from "../services/api";
 
 function Dashboard() {
 
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+
+        navigate("/");
+
+        return;
+
+    }
+
     fetchUsers();
-  }, []);
+
+}, []);
 
   const fetchUsers = async () => {
 

@@ -64,7 +64,7 @@ function Login() {
             >
 
                 <h2 className="text-center mb-4">
-                    Login
+                    Login CI/CD Test
                 </h2>
 
                 {error && (

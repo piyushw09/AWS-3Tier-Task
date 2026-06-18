@@ -149,7 +149,7 @@ Hosted on:
 Replace with your S3 URL:
 
 ```text
-http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/
+http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/#/
 ```
 
 ### Backend URL
@@ -157,7 +157,7 @@ http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/
 Replace with your Elastic Beanstalk URL:
 
 ```text
-http://aws-3tier-backend.ap-south-1.elasticbeanstalk.com/health
+http://aws-3-tier-backend-new-env.ap-south-1.elasticbeanstalk.com/health
 ```
 
 ---

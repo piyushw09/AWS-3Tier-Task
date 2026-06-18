@@ -1,96 +1,139 @@
 import { useState } from "react";
-import { Card, Form, Button, Container } from "react-bootstrap";
+import { Card, Form, Button, Container, Alert, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function Login() {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  const loginUser = async () => {
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    try {
+    const loginUser = async (e) => {
 
-      const response = await API.post("/users/login", {
-        email,
-        password
-      });
+        e.preventDefault();
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(response.data.user)
-      );
+        setError("");
 
-      navigate("/dashboard");
+        if (!email || !password) {
+            setError("Please enter both email and password.");
+            return;
+        }
 
-    } catch (error) {
+        try {
 
-      alert("Invalid Credentials");
+            setLoading(true);
 
-    }
-  };
+            const response = await API.post("/users/login", {
+                email,
+                password
+            });
 
-  return (
-    <Container
-      className="d-flex justify-content-center align-items-center page-container"
-    >
-      <Card
-        className="auth-card p-4"
-        style={{ width: "400px" }}
-      >
+            localStorage.setItem(
+                "user",
+                JSON.stringify(response.data.user)
+            );
 
-        <h2 className="text-center mb-4">
-          Login
-        </h2>
+            navigate("/dashboard");
 
-        <Form>
+        } catch (error) {
 
-          <Form.Group className="mb-3">
+            setError(
+                error.response?.data?.message ||
+                "Invalid Credentials"
+            );
 
-            <Form.Label>Email</Form.Label>
+        } finally {
 
-            <Form.Control
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            setLoading(false);
 
-          </Form.Group>
+        }
+    };
 
-          <Form.Group className="mb-3">
+    return (
+        <Container
+            className="d-flex justify-content-center align-items-center page-container"
+        >
+            <Card
+                className="auth-card p-4"
+                style={{ width: "400px" }}
+            >
 
-            <Form.Label>Password</Form.Label>
+                <h2 className="text-center mb-4">
+                    Login
+                </h2>
 
-            <Form.Control
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+                {error && (
+                    <Alert variant="danger">
+                        {error}
+                    </Alert>
+                )}
 
-          </Form.Group>
+                <Form onSubmit={loginUser}>
 
-          <Button
-            variant="primary"
-            className="w-100"
-            onClick={loginUser}
-          >
-            Login
-          </Button>
+                    <Form.Group className="mb-3">
 
-          <Button
-            variant="link"
-            className="w-100 mt-2"
-            onClick={() => navigate("/register")}
-          >
-            Create Account
-          </Button>
+                        <Form.Label>Email</Form.Label>
 
-        </Form>
+                        <Form.Control
+                            type="email"
+                            placeholder="Enter email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
 
-      </Card>
-    </Container>
-  );
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+
+                        <Form.Label>Password</Form.Label>
+
+                        <Form.Control
+                            type="password"
+                            placeholder="Enter password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+
+                    </Form.Group>
+
+                    <Button
+                        variant="primary"
+                        className="w-100"
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <Spinner
+                                    animation="border"
+                                    size="sm"
+                                    className="me-2"
+                                />
+                                Logging in...
+                            </>
+                        ) : (
+                            "Login"
+                        )}
+                    </Button>
+
+                    <Button
+                        variant="link"
+                        className="w-100 mt-2"
+                        onClick={() => navigate("/register")}
+                    >
+                        Create Account
+                    </Button>
+
+                </Form>
+
+            </Card>
+        </Container>
+    );
 }
 
 export default Login;

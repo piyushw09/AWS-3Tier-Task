@@ -20,10 +20,17 @@ app.use(express.json());
 // Routes
 app.use("/users", userRoutes);
 
+// Root Endpoint
+app.get("/", (req, res) => {
+    res.json({
+        message: "AWS 3-Tier Backend API is running successfully 🚀"
+    });
+});
+
 // Health Check Endpoint
 app.get("/health", (req, res) => {
     res.json({
-        status: "Application Running (CI/CD Test)"
+        status: "Application Running"
     });
 });
 

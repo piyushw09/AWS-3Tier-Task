@@ -6,6 +6,8 @@ const User = require("../models/User");
 
 const jwt = require("jsonwebtoken");
 
+const authMiddleware = require("../middleware/authMiddleware");
+
 router.post("/", async (req, res) => {
 
     try {
@@ -78,8 +80,7 @@ router.post("/login", async (req, res) => {
 
 });
 
-router.get("/", async (req, res) => {
-
+router.get("/", authMiddleware, async (req, res) => {
     try {
 
         const users = await User.find();

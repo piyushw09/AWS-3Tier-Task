@@ -1,195 +1,238 @@
-# AWS 3-Tier Web Application
+# 🚀 AWS 3-Tier Web Application
 
-A full-stack web application deployed on AWS using a 3-tier architecture. The project consists of a React frontend, a Node.js/Express backend, and MongoDB Atlas as the database.
-
----
-
-## Project Overview
-
-This application demonstrates the deployment of a scalable web application on AWS using industry-standard cloud architecture principles.
-
-The application includes:
-
-- User Registration
-- User Login
-- Dashboard
-- MongoDB Database Integration
-- AWS Elastic Beanstalk Deployment
-- AWS S3 Static Website Hosting
+A production-ready 3-Tier Web Application deployed on AWS using modern cloud-native practices, secure JWT authentication, and CI/CD automation.
 
 ---
 
-## Architecture
+## 📌 Project Overview
 
-### Components
+This project demonstrates the deployment of a scalable and secure 3-Tier architecture on AWS.
 
-Frontend:
-- React.js
-- AWS S3 Static Website Hosting
+The application consists of:
 
-Backend:
-- Node.js
-- Express.js
-- AWS Elastic Beanstalk
+* **Frontend Tier:** React.js application hosted on Amazon S3.
+* **Application Tier:** Node.js and Express.js backend hosted on AWS Elastic Beanstalk.
+* **Database Tier:** MongoDB Atlas database.
 
-Database:
-- MongoDB Atlas
+The project also includes:
 
-Networking:
-- Custom AWS VPC
-- Public Subnets
-- Private Subnets
-- Internet Gateway
-- Route Tables
+* JWT Authentication & Authorization
+* Protected APIs
+* Automated Frontend Deployment using GitHub Actions
+* Responsive UI using React Bootstrap
 
 ---
 
-## Architecture Diagram
-
-![Architecture Diagram](architecture/aws-architecure-diagram.png)
-
----
-
-## Technology Stack
-
-| Layer             | Technology        |
-|-------------------|-------------------|
-| Frontend          | React.js          |
-| Backend           | Node.js           |
-| API Framework     | Express.js        |
-| Database          | MongoDB Atlas     |
-| Cloud Provider    | AWS               |
-| Backend Hosting   | Elastic Beanstalk |
-| Frontend Hosting  | Amazon S3         |
-| Version Control   | Git & GitHub      |
-
----
-
-## Project Structure
+# 🏗️ Architecture
 
 ```text
-aws-3tier-interview-assignment/
+┌──────────────────────┐
+│      End User        │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Amazon S3 (Frontend) │
+│ React + Vite         │
+└──────────┬───────────┘
+           │ REST API
+           ▼
+┌──────────────────────────────┐
+│ AWS Elastic Beanstalk        │
+│ Node.js + Express Backend    │
+└──────────┬───────────────────┘
+           │
+           ▼
+┌──────────────────────┐
+│   MongoDB Atlas      │
+│      Database        │
+└──────────────────────┘
+```
 
-├── frontend/
+---
+
+# ✨ Features
+
+## User Features
+
+* User Registration
+* User Login
+* JWT-based Authentication
+* Secure Logout
+* Protected Dashboard
+* View Registered Users
+
+---
+
+## Security Features
+
+* JWT Token Generation
+* Protected Backend APIs
+* Protected Frontend Routes
+* Automatic Logout on Invalid/Expired Tokens
+* Axios Request & Response Interceptors
+
+---
+
+## Cloud Features
+
+* Static Frontend Hosting using Amazon S3
+* Backend Deployment using Elastic Beanstalk
+* MongoDB Atlas Integration
+* Health Check Endpoint
+* Environment Variable Management
+
+---
+
+## DevOps Features
+
+* Source Code Management using Git & GitHub
+* Automated Frontend Deployment using GitHub Actions
+* CI/CD Pipeline for Continuous Deployment
+
+---
+
+# 🛠️ Tech Stack
+
+| Category         | Technologies                    |
+| ---------------- | ------------------------------- |
+| Frontend         | React.js, Vite, React Bootstrap |
+| Backend          | Node.js, Express.js             |
+| Database         | MongoDB Atlas                   |
+| Authentication   | JSON Web Token (JWT)            |
+| Cloud Platform   | AWS                             |
+| Frontend Hosting | Amazon S3                       |
+| Backend Hosting  | Elastic Beanstalk               |
+| CI/CD            | GitHub Actions                  |
+| Version Control  | Git, GitHub                     |
+
+---
+
+# 📂 Project Structure
+
+```text
+AWS-3Tier-Project/
+│
+├── Frontend/
 │   ├── src/
-│   ├── public/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── App.jsx
+│   │
 │   └── package.json
 │
-├── backend/
+├── Backend/
 │   ├── config/
+│   ├── middleware/
 │   ├── models/
 │   ├── routes/
 │   ├── server.js
 │   └── package.json
 │
-├── architecture/
-│   └── aws-3tier-architecture.png
-│
-├── docs/
-│   └── screenshots/
-│
-└── README.md
+└── .github/
+    └── workflows/
+        └── frontend.yml
 ```
 
 ---
 
-## Application Features
-
-### User Registration
-
-Users can register with:
-
-- Username
-- Email
-- Password
-
-### User Login
-
-Registered users can authenticate using:
-
-- Email
-- Password
-
-### Dashboard
-
-The dashboard displays:
-
-- User information
-- Total users
-- Application statistics
-
----
-
-## AWS Deployment
-
-### Frontend
-
-Hosted on:
-
-- Amazon S3 Static Website Hosting
-
-### Backend
-
-Hosted on:
-
-- AWS Elastic Beanstalk
-
-### Database
-
-Hosted on:
-
-- MongoDB Atlas
-
----
-
-## Live Application
-
-### Frontend URL
-
-Replace with your S3 URL:
+# 🔐 Authentication Flow
 
 ```text
-http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/#/
-```
-
-### Backend URL
-
-Replace with your Elastic Beanstalk URL:
-
-```text
-http://aws-3-tier-backend-new-env.ap-south-1.elasticbeanstalk.com/health
+User Login
+      │
+      ▼
+Backend validates credentials
+      │
+      ▼
+JWT Token generated
+      │
+      ▼
+Token stored in Local Storage
+      │
+      ▼
+Axios sends token in Authorization Header
+      │
+      ▼
+Backend Middleware verifies JWT
+      │
+      ▼
+Access granted to protected resources
 ```
 
 ---
 
-## Local Setup
+# 🚀 Deployment Details
 
-### Clone Repository
+## Frontend Deployment
+
+* Hosted on Amazon S3 Static Website Hosting.
+* Built using Vite.
+
+Deployment URL:
+
+```text
+http://aws-3tier-frontend-piyush.s3-website.ap-south-1.amazonaws.com/
+```
+
+---
+
+## Backend Deployment
+
+* Hosted on AWS Elastic Beanstalk.
+
+Health Endpoint:
+
+```text
+http://aws-3-tier-backend-new-env-env.eba-ijwip34e.ap-south-1.elasticbeanstalk.com/health
+```
+
+---
+
+# ⚙️ Environment Variables
+
+Create a `.env` file inside the Backend directory:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+---
+
+# 🔄 CI/CD Pipeline
+
+GitHub Actions workflow automatically:
+
+1. Detects changes pushed to the `main` branch.
+2. Installs project dependencies.
+3. Builds the React application.
+4. Deploys the latest build to Amazon S3.
+
+Workflow File:
+
+```text
+.github/workflows/frontend.yml
+```
+
+---
+
+# 📥 Installation & Setup
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/piyushw09/AWS-3Tier-Task.git
 ```
 
-### Backend Setup
+---
+
+## Frontend Setup
 
 ```bash
-cd backend
-
-npm install
-
-npm run dev
-```
-
-Create: This MONGO_URI is inside /docs/.env file.
-
-```env
-MONGO_URI=<your_mongodb_connection_string>
-```
-
-### Frontend Setup
-
-```bash
-cd frontend
+cd Frontend
 
 npm install
 
@@ -198,18 +241,63 @@ npm run dev
 
 ---
 
-## Screenshots
+## Backend Setup
 
-Application screenshots can be found inside:
+```bash
+cd Backend
 
-```text
-docs/networking/
+npm install
+
+npm start
 ```
 
 ---
 
-## Author
+# 📸 Screenshots
 
-Piyush Wadatkar
+Add screenshots of:
+
+* Login Page
+* Register Page
+* Dashboard
+* AWS S3 Hosting
+* Elastic Beanstalk Dashboard
+* GitHub Actions Workflow
+
+---
+
+# 🔮 Future Enhancements
+
+* Password Hashing using bcrypt
+* Refresh Token Mechanism
+* Role-Based Access Control (RBAC)
+* Forgot Password Functionality
+* Docker Containerization
+* Kubernetes Deployment
+* CloudFront Integration
+* Infrastructure as Code using Terraform
+
+---
+
+# 📈 Project Outcomes
+
+* Successfully implemented a secure 3-Tier Architecture on AWS.
+* Improved application security using JWT Authentication.
+* Automated deployments using GitHub Actions.
+* Gained hands-on experience with AWS, DevOps, and Full-Stack Development.
+
+---
+
+# 👨‍💻 Author
+
+**Piyush Wadatkar**
 
 AWS Cloud & DevOps Enthusiast
+
+GitHub: https://github.com/piyushw09
+
+LinkedIn: Add your LinkedIn profile URL here.
+
+---
+
+⭐ If you found this project useful, please consider giving it a star.

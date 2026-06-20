@@ -18,9 +18,32 @@ API.interceptors.request.use(
         }
 
         return config;
+
     },
 
     (error) => {
+
+        return Promise.reject(error);
+
+    }
+
+);
+
+// Handle Invalid or Expired Tokens
+API.interceptors.response.use(
+
+    (response) => response,
+
+    (error) => {
+
+        if (error.response?.status === 401) {
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+
+            window.location.href = "/#/";
+
+        }
 
         return Promise.reject(error);
 

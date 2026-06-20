@@ -23,7 +23,7 @@ app.use("/users", userRoutes);
 // Health Check Endpoint
 app.get("/health", (req, res) => {
     res.json({
-        status: "Application Running"
+        status: "Application Running (CI/CD Test)"
     });
 });
 

@@ -6,161 +6,231 @@ import API from "../services/api";
 
 function Dashboard() {
 
-  const currentUser = JSON.parse(
-    localStorage.getItem("user")
-  );
+    const currentUser = JSON.parse(
+        localStorage.getItem("user")
+    );
 
-const loginTime = localStorage.getItem("loginTime");
+    const loginTime = localStorage.getItem("loginTime");
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
 
-  useEffect(() => {
+    useEffect(() => {
 
-    const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
 
-    if (!token) {
+        if (!token) {
 
-        navigate("/");
+            navigate("/");
+            return;
 
-        return;
+        }
 
-    }
+        fetchUsers();
 
-    fetchUsers();
+    }, []);
 
-}, []);
+    const fetchUsers = async () => {
 
-  const fetchUsers = async () => {
+        try {
 
-    const response = await API.get("/users");
+            const response = await API.get("/users");
 
-    setUsers(response.data);
+            setUsers(response.data);
 
-  };
+        } catch (error) {
 
-  return (
-    <>
-      <NavigationBar />
+            console.error(error);
 
-      <Container className="mt-4">
+        }
 
-        <Row>
+    };
 
-          <div className="mb-4">
+    return (
+        <>
+            <NavigationBar />
 
-            <h2>
-              Welcome back, {currentUser?.username} 👋
-            </h2>
+            <Container className="mt-4">
 
-            <p className="text-muted">
-              Last Login: {loginTime}
-            </p>
+                {/* Welcome Section */}
 
-          </div>
+                <div className="mb-4">
 
-          <Col md={4}>
-            <Card
-              bg="primary"
-              text="white"
-              className="dashboard-card"
-            >
-              <Card.Body>
+                    <h2>
+                        Welcome back, {currentUser?.username} 👋
+                    </h2>
 
-                <Card.Title>
-                  Total Users
-                </Card.Title>
+                    <p className="text-muted">
+                        Last Login: {loginTime}
+                    </p>
 
-                <h1>
-                  {users.length}
-                </h1>
+                </div>
 
-              </Card.Body>
-            </Card>
-          </Col>
+                {/* Statistics Cards */}
 
-          <Col md={4}>
-            <Card
-              bg="success"
-              text="white"
-              className="dashboard-card"
-            >
-              <Card.Body>
+                <Row>
 
-                <Card.Title>
-                  Database
-                </Card.Title>
+                    <Col md={4}>
+                        <Card
+                            bg="primary"
+                            text="white"
+                            className="dashboard-card"
+                        >
+                            <Card.Body>
 
-                <h4>
-                  MongoDB Atlas
-                </h4>
+                                <Card.Title>
+                                    Total Users
+                                </Card.Title>
 
-              </Card.Body>
-            </Card>
-          </Col>
+                                <h1>
+                                    {users.length}
+                                </h1>
 
-          <Col md={4}>
-            <Card
-              bg="dark"
-              text="white"
-              className="dashboard-card"
-            >
-              <Card.Body>
+                            </Card.Body>
+                        </Card>
+                    </Col>
 
-                <Card.Title>
-                  Backend
-                </Card.Title>
+                    <Col md={4}>
+                        <Card
+                            bg="success"
+                            text="white"
+                            className="dashboard-card"
+                        >
+                            <Card.Body>
 
-                <h4>
-                  Node.js API
-                </h4>
+                                <Card.Title>
+                                    Database
+                                </Card.Title>
 
-              </Card.Body>
-            </Card>
-          </Col>
+                                <h4>
+                                    MongoDB Atlas
+                                </h4>
 
-        </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
 
-        <div className="table-container mt-4">
+                    <Col md={4}>
+                        <Card
+                            bg="dark"
+                            text="white"
+                            className="dashboard-card"
+                        >
+                            <Card.Body>
 
-          <h3>User List</h3>
+                                <Card.Title>
+                                    Backend
+                                </Card.Title>
 
-          <Table
-            striped
-            bordered
-            hover
-          >
+                                <h4>
+                                    Node.js API
+                                </h4>
 
-            <thead>
+                            </Card.Body>
+                        </Card>
+                    </Col>
 
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-              </tr>
+                </Row>
 
-            </thead>
+                {/* Profile Card */}
 
-            <tbody>
+                <Row className="mt-4">
 
-              {users.map((user) => (
+                    <Col md={6}>
 
-                <tr key={user._id}>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                </tr>
+                        <Card className="dashboard-card">
 
-              ))}
+                            <Card.Body>
 
-            </tbody>
+                                <Card.Title>
+                                    Profile Information
+                                </Card.Title>
 
-          </Table>
+                                <hr />
 
-        </div>
+                                <div className="text-center mb-4">
 
-      </Container>
-    </>
-  );
+                                    <img
+                                        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                                        alt="Profile"
+                                        width="100"
+                                    />
+
+                                </div>
+
+                                <p>
+                                    <strong>Username:</strong>{" "}
+                                    {currentUser?.username}
+                                </p>
+
+                                <p>
+                                    <strong>Email:</strong>{" "}
+                                    {currentUser?.email}
+                                </p>
+
+                                <p>
+                                    <strong>Last Login:</strong>{" "}
+                                    {loginTime}
+                                </p>
+
+                                <p>
+                                    <strong>Authentication:</strong>{" "}
+                                    JWT Token
+                                </p>
+
+                            </Card.Body>
+
+                        </Card>
+
+                    </Col>
+
+                </Row>
+
+                {/* User Table */}
+
+                <div className="table-container mt-4">
+
+                    <h3>User List</h3>
+
+                    <Table
+                        striped
+                        bordered
+                        hover
+                    >
+
+                        <thead>
+
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {users.map((user) => (
+
+                                <tr key={user._id}>
+
+                                    <td>{user.username}</td>
+
+                                    <td>{user.email}</td>
+
+                                </tr>
+
+                            ))}
+
+                        </tbody>
+
+                    </Table>
+
+                </div>
+
+            </Container>
+        </>
+    );
 }
 
 export default Dashboard;

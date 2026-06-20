@@ -5,9 +5,13 @@ function NavigationBar() {
   const navigate = useNavigate();
 
   const logout = () => {
+
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/");
-  };
+
+    navigate("/", { replace: true });
+
+};
 
   return (
     <Navbar bg="dark" variant="dark">

@@ -15,6 +15,7 @@ function Dashboard() {
     const navigate = useNavigate();
 
     const [users, setUsers] = useState([]);
+    const [backendStatus, setBackendStatus] = useState("Checking...");
 
     useEffect(() => {
 
@@ -28,6 +29,7 @@ function Dashboard() {
         }
 
         fetchUsers();
+        checkBackendHealth();
 
     }, []);
 
@@ -42,6 +44,22 @@ function Dashboard() {
         } catch (error) {
 
             console.error(error);
+
+        }
+
+    };
+
+    const checkBackendHealth = async () => {
+
+        try {
+
+            await API.get("/health");
+
+            setBackendStatus("Online");
+
+        } catch (error) {
+
+            setBackendStatus("Offline");
 
         }
 
@@ -113,18 +131,30 @@ function Dashboard() {
 
                     <Col md={4}>
                         <Card
-                            bg="dark"
+                            bg={
+                                backendStatus === "Online"
+                                    ? "success"
+                                    : backendStatus === "Offline"
+                                        ? "danger"
+                                        : "warning"
+                            }
                             text="white"
                             className="dashboard-card"
                         >
                             <Card.Body>
 
                                 <Card.Title>
-                                    Backend
+                                    Backend Health
                                 </Card.Title>
 
                                 <h4>
-                                    Node.js API
+
+                                    {backendStatus === "Online"
+                                        ? "🟢 Online"
+                                        : backendStatus === "Offline"
+                                            ? "🔴 Offline"
+                                            : "🟡 Checking..."}
+
                                 </h4>
 
                             </Card.Body>

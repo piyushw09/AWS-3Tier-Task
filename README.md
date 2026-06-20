@@ -296,7 +296,7 @@ AWS Cloud & DevOps Enthusiast
 
 GitHub: https://github.com/piyushw09
 
-LinkedIn: Add your LinkedIn profile URL here.
+LinkedIn: https://www.linkedin.com/in/piyush-wadatkar-869817251/
 
 ---
 

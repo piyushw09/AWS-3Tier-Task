@@ -43,6 +43,12 @@ function Login() {
                 JSON.stringify(response.data.user)
             );
 
+            localStorage.setItem(
+                "loginTime",
+                new Date().toLocaleString()
+            );
+
+
             navigate("/dashboard");
 
         } catch (error) {

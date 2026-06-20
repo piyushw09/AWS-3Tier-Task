@@ -6,6 +6,12 @@ import API from "../services/api";
 
 function Dashboard() {
 
+  const currentUser = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+const loginTime = localStorage.getItem("loginTime");
+
   const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
@@ -41,6 +47,18 @@ function Dashboard() {
       <Container className="mt-4">
 
         <Row>
+
+          <div className="mb-4">
+
+            <h2>
+              Welcome back, {currentUser?.username} 👋
+            </h2>
+
+            <p className="text-muted">
+              Last Login: {loginTime}
+            </p>
+
+          </div>
 
           <Col md={4}>
             <Card
